@@ -1,0 +1,647 @@
+psql (18.2, server 14.19 (Homebrew))
+Type "help" for help.
+
+testing=# select * from employees;
+ERROR:  relation "employees" does not exist
+LINE 1: select * from employees;
+                      ^
+testing=# CREATE TABLE employees (
+testing(#     id INT,
+    name VARCHAR(50),
+    age INT,
+    department VARCHAR(50),
+    salary INT
+);    id INT,
+testing(#     name VARCHAR(50),
+    age INT,
+    department VARCHAR(50),
+    salary INT
+);    name VARCHAR(50),
+testing(#     age INT,
+    department VARCHAR(50),
+    salary INT
+);    age INT,
+testing(#     department VARCHAR(50),
+    salary INT
+);    department VARCHAR(50),
+testing(#     salary INT
+);    salary INT
+testing(# ););
+CREATE TABLE
+testing=# INSERT INTO employees VALUES
+testing-# (1, 'Amit', 25, 'IT', 40000),
+(2, 'Ravi', 30, 'HR', 30000),
+(3, 'Neha', 28, 'IT', 50000),
+(4, 'Simran', 35, 'Finance', 60000),
+(5, 'Karan', 26, 'IT', 45000);(1, 'Amit', 25, 'IT', 40000),
+testing-# (2, 'Ravi', 30, 'HR', 30000),
+(3, 'Neha', 28, 'IT', 50000),
+(4, 'Simran', 35, 'Finance', 60000),
+(5, 'Karan', 26, 'IT', 45000);(2, 'Ravi', 30, 'HR', 30000),
+testing-# (3, 'Neha', 28, 'IT', 50000),
+(4, 'Simran', 35, 'Finance', 60000),
+(5, 'Karan', 26, 'IT', 45000);(3, 'Neha', 28, 'IT', 50000),
+testing-# (4, 'Simran', 35, 'Finance', 60000),
+(5, 'Karan', 26, 'IT', 45000);(4, 'Simran', 35, 'Finance', 60000),
+testing-# (5, 'Karan', 26, 'IT', 45000);(5, 'Karan', 26, 'IT', 45000);
+INSERT 0 5
+testing=# truncate table employees;
+TRUNCATE TABLE
+testing=# select * from employees;
+ id | name | age | department | salary 
+----+------+-----+------------+--------
+(0 rows)
+
+testing=# INSERT INTO employees (id, name, age, department, salary)
+testing-# SELECT 
+    i,
+    'Emp_' || i,
+    20 + (i % 15),
+    CASE 
+        WHEN i % 3 = 0 THEN 'IT'
+        WHEN i % 3 = 1 THEN 'HR'
+        ELSE 'Finance'
+    END,
+    30000 + (i * 500)
+FROM generate_series(1,100) AS s(i);SELECT 
+testing-#     i,
+    'Emp_' || i,
+    20 + (i % 15),
+    CASE 
+        WHEN i % 3 = 0 THEN 'IT'
+        WHEN i % 3 = 1 THEN 'HR'
+        ELSE 'Finance'
+    END,
+    30000 + (i * 500)
+FROM generate_series(1,100) AS s(i);    i,
+testing-#     'Emp_' || i,
+    20 + (i % 15),
+    CASE 
+        WHEN i % 3 = 0 THEN 'IT'
+        WHEN i % 3 = 1 THEN 'HR'
+        ELSE 'Finance'
+    END,
+    30000 + (i * 500)
+FROM generate_series(1,100) AS s(i);    'Emp_' || i,
+testing-#     20 + (i % 15),
+    CASE 
+        WHEN i % 3 = 0 THEN 'IT'
+        WHEN i % 3 = 1 THEN 'HR'
+        ELSE 'Finance'
+    END,
+    30000 + (i * 500)
+FROM generate_series(1,100) AS s(i);    20 + (i % 15),
+testing-#     CASE 
+        WHEN i % 3 = 0 THEN 'IT'
+        WHEN i % 3 = 1 THEN 'HR'
+        ELSE 'Finance'
+    END,
+    30000 + (i * 500)
+FROM generate_series(1,100) AS s(i);    CASE 
+testing-#         WHEN i % 3 = 0 THEN 'IT'
+        WHEN i % 3 = 1 THEN 'HR'
+        ELSE 'Finance'
+    END,
+    30000 + (i * 500)
+FROM generate_series(1,100) AS s(i);        WHEN i % 3 = 0 THEN 'IT'
+testing-#         WHEN i % 3 = 1 THEN 'HR'
+        ELSE 'Finance'
+    END,
+    30000 + (i * 500)
+FROM generate_series(1,100) AS s(i);        WHEN i % 3 = 1 THEN 'HR'
+testing-#         ELSE 'Finance'
+    END,
+    30000 + (i * 500)
+FROM generate_series(1,100) AS s(i);        ELSE 'Finance'
+testing-#     END,
+    30000 + (i * 500)
+FROM generate_series(1,100) AS s(i);    END,
+testing-#     30000 + (i * 500)
+FROM generate_series(1,100) AS s(i);    30000 + (i * 500)
+testing-# FROM generate_series(1,100) AS s(i);FROM generate_series(1,100) AS s(i);
+INSERT 0 100
+testing=# select * from employees;
+ id  |  name   | age | department | salary 
+-----+---------+-----+------------+--------
+   1 | Emp_1   |  21 | HR         |  30500
+   2 | Emp_2   |  22 | Finance    |  31000
+   3 | Emp_3   |  23 | IT         |  31500
+   4 | Emp_4   |  24 | HR         |  32000
+   5 | Emp_5   |  25 | Finance    |  32500
+   6 | Emp_6   |  26 | IT         |  33000
+   7 | Emp_7   |  27 | HR         |  33500
+   8 | Emp_8   |  28 | Finance    |  34000
+   9 | Emp_9   |  29 | IT         |  34500
+  10 | Emp_10  |  30 | HR         |  35000
+  11 | Emp_11  |  31 | Finance    |  35500
+  12 | Emp_12  |  32 | IT         |  36000
+  13 | Emp_13  |  33 | HR         |  36500
+  14 | Emp_14  |  34 | Finance    |  37000
+  15 | Emp_15  |  20 | IT         |  37500
+  16 | Emp_16  |  21 | HR         |  38000
+  17 | Emp_17  |  22 | Finance    |  38500
+  18 | Emp_18  |  23 | IT         |  39000
+  19 | Emp_19  |  24 | HR         |  39500
+  20 | Emp_20  |  25 | Finance    |  40000
+  21 | Emp_21  |  26 | IT         |  40500
+  22 | Emp_22  |  27 | HR         |  41000
+  23 | Emp_23  |  28 | Finance    |  41500
+  24 | Emp_24  |  29 | IT         |  42000
+  25 | Emp_25  |  30 | HR         |  42500
+  26 | Emp_26  |  31 | Finance    |  43000
+  27 | Emp_27  |  32 | IT         |  43500
+  28 | Emp_28  |  33 | HR         |  44000
+  29 | Emp_29  |  34 | Finance    |  44500
+  30 | Emp_30  |  20 | IT         |  45000
+  31 | Emp_31  |  21 | HR         |  45500
+  32 | Emp_32  |  22 | Finance    |  46000
+  33 | Emp_33  |  23 | IT         |  46500
+  34 | Emp_34  |  24 | HR         |  47000
+  35 | Emp_35  |  25 | Finance    |  47500
+  36 | Emp_36  |  26 | IT         |  48000
+  37 | Emp_37  |  27 | HR         |  48500
+  38 | Emp_38  |  28 | Finance    |  49000
+  39 | Emp_39  |  29 | IT         |  49500
+  40 | Emp_40  |  30 | HR         |  50000
+  41 | Emp_41  |  31 | Finance    |  50500
+  42 | Emp_42  |  32 | IT         |  51000
+  43 | Emp_43  |  33 | HR         |  51500
+  44 | Emp_44  |  34 | Finance    |  52000
+  45 | Emp_45  |  20 | IT         |  52500
+  46 | Emp_46  |  21 | HR         |  53000
+  47 | Emp_47  |  22 | Finance    |  53500
+  48 | Emp_48  |  23 | IT         |  54000
+  49 | Emp_49  |  24 | HR         |  54500
+  50 | Emp_50  |  25 | Finance    |  55000
+  51 | Emp_51  |  26 | IT         |  55500
+  52 | Emp_52  |  27 | HR         |  56000
+  53 | Emp_53  |  28 | Finance    |  56500
+  54 | Emp_54  |  29 | IT         |  57000
+  55 | Emp_55  |  30 | HR         |  57500
+  56 | Emp_56  |  31 | Finance    |  58000
+  57 | Emp_57  |  32 | IT         |  58500
+  58 | Emp_58  |  33 | HR         |  59000
+  59 | Emp_59  |  34 | Finance    |  59500
+  60 | Emp_60  |  20 | IT         |  60000
+  61 | Emp_61  |  21 | HR         |  60500
+  62 | Emp_62  |  22 | Finance    |  61000
+  63 | Emp_63  |  23 | IT         |  61500
+  64 | Emp_64  |  24 | HR         |  62000
+  65 | Emp_65  |  25 | Finance    |  62500
+  66 | Emp_66  |  26 | IT         |  63000
+  67 | Emp_67  |  27 | HR         |  63500
+  68 | Emp_68  |  28 | Finance    |  64000
+  69 | Emp_69  |  29 | IT         |  64500
+  70 | Emp_70  |  30 | HR         |  65000
+  71 | Emp_71  |  31 | Finance    |  65500
+  72 | Emp_72  |  32 | IT         |  66000
+  73 | Emp_73  |  33 | HR         |  66500
+  74 | Emp_74  |  34 | Finance    |  67000
+  75 | Emp_75  |  20 | IT         |  67500
+  76 | Emp_76  |  21 | HR         |  68000
+  77 | Emp_77  |  22 | Finance    |  68500
+  78 | Emp_78  |  23 | IT         |  69000
+  79 | Emp_79  |  24 | HR         |  69500
+  80 | Emp_80  |  25 | Finance    |  70000
+  81 | Emp_81  |  26 | IT         |  70500
+  82 | Emp_82  |  27 | HR         |  71000
+  83 | Emp_83  |  28 | Finance    |  71500
+  84 | Emp_84  |  29 | IT         |  72000
+  85 | Emp_85  |  30 | HR         |  72500
+  86 | Emp_86  |  31 | Finance    |  73000
+  87 | Emp_87  |  32 | IT         |  73500
+  88 | Emp_88  |  33 | HR         |  74000
+  89 | Emp_89  |  34 | Finance    |  74500
+  90 | Emp_90  |  20 | IT         |  75000
+  91 | Emp_91  |  21 | HR         |  75500
+  92 | Emp_92  |  22 | Finance    |  76000
+  93 | Emp_93  |  23 | IT         |  76500
+  94 | Emp_94  |  24 | HR         |  77000
+  95 | Emp_95  |  25 | Finance    |  77500
+  96 | Emp_96  |  26 | IT         |  78000
+  97 | Emp_97  |  27 | HR         |  78500
+  98 | Emp_98  |  28 | Finance    |  79000
+  99 | Emp_99  |  29 | IT         |  79500
+ 100 | Emp_100 |  30 | HR         |  80000
+(100 rows)
+
+testing=# 
+testing=# 
+testing=# 
+testing=# 
+testing=# select name , salary from employees;
+  name   | salary 
+---------+--------
+ Emp_1   |  30500
+ Emp_2   |  31000
+ Emp_3   |  31500
+ Emp_4   |  32000
+ Emp_5   |  32500
+ Emp_6   |  33000
+ Emp_7   |  33500
+ Emp_8   |  34000
+ Emp_9   |  34500
+ Emp_10  |  35000
+ Emp_11  |  35500
+ Emp_12  |  36000
+ Emp_13  |  36500
+ Emp_14  |  37000
+ Emp_15  |  37500
+ Emp_16  |  38000
+ Emp_17  |  38500
+ Emp_18  |  39000
+ Emp_19  |  39500
+ Emp_20  |  40000
+ Emp_21  |  40500
+ Emp_22  |  41000
+ Emp_23  |  41500
+ Emp_24  |  42000
+ Emp_25  |  42500
+ Emp_26  |  43000
+ Emp_27  |  43500
+ Emp_28  |  44000
+ Emp_29  |  44500
+ Emp_30  |  45000
+ Emp_31  |  45500
+ Emp_32  |  46000
+ Emp_33  |  46500
+ Emp_34  |  47000
+ Emp_35  |  47500
+ Emp_36  |  48000
+ Emp_37  |  48500
+ Emp_38  |  49000
+ Emp_39  |  49500
+ Emp_40  |  50000
+ Emp_41  |  50500
+ Emp_42  |  51000
+ Emp_43  |  51500
+ Emp_44  |  52000
+ Emp_45  |  52500
+ Emp_46  |  53000
+ Emp_47  |  53500
+ Emp_48  |  54000
+ Emp_49  |  54500
+ Emp_50  |  55000
+ Emp_51  |  55500
+ Emp_52  |  56000
+ Emp_53  |  56500
+ Emp_54  |  57000
+ Emp_55  |  57500
+ Emp_56  |  58000
+ Emp_57  |  58500
+ Emp_58  |  59000
+ Emp_59  |  59500
+testing=# 
+testing=# select * from employees where department = 'IT';
+ id |  name  | age | department | salary 
+----+--------+-----+------------+--------
+  3 | Emp_3  |  23 | IT         |  31500
+  6 | Emp_6  |  26 | IT         |  33000
+  9 | Emp_9  |  29 | IT         |  34500
+ 12 | Emp_12 |  32 | IT         |  36000
+ 15 | Emp_15 |  20 | IT         |  37500
+ 18 | Emp_18 |  23 | IT         |  39000
+ 21 | Emp_21 |  26 | IT         |  40500
+ 24 | Emp_24 |  29 | IT         |  42000
+ 27 | Emp_27 |  32 | IT         |  43500
+ 30 | Emp_30 |  20 | IT         |  45000
+ 33 | Emp_33 |  23 | IT         |  46500
+ 36 | Emp_36 |  26 | IT         |  48000
+ 39 | Emp_39 |  29 | IT         |  49500
+ 42 | Emp_42 |  32 | IT         |  51000
+ 45 | Emp_45 |  20 | IT         |  52500
+ 48 | Emp_48 |  23 | IT         |  54000
+ 51 | Emp_51 |  26 | IT         |  55500
+ 54 | Emp_54 |  29 | IT         |  57000
+ 57 | Emp_57 |  32 | IT         |  58500
+ 60 | Emp_60 |  20 | IT         |  60000
+ 63 | Emp_63 |  23 | IT         |  61500
+ 66 | Emp_66 |  26 | IT         |  63000
+ 69 | Emp_69 |  29 | IT         |  64500
+ 72 | Emp_72 |  32 | IT         |  66000
+ 75 | Emp_75 |  20 | IT         |  67500
+ 78 | Emp_78 |  23 | IT         |  69000
+ 81 | Emp_81 |  26 | IT         |  70500
+ 84 | Emp_84 |  29 | IT         |  72000
+ 87 | Emp_87 |  32 | IT         |  73500
+ 90 | Emp_90 |  20 | IT         |  75000
+ 93 | Emp_93 |  23 | IT         |  76500
+ 96 | Emp_96 |  26 | IT         |  78000
+ 99 | Emp_99 |  29 | IT         |  79500
+(33 rows)
+
+testing=# select * from employees where salary > 40000;
+ id  |  name   | age | department | salary 
+-----+---------+-----+------------+--------
+  21 | Emp_21  |  26 | IT         |  40500
+  22 | Emp_22  |  27 | HR         |  41000
+  23 | Emp_23  |  28 | Finance    |  41500
+  24 | Emp_24  |  29 | IT         |  42000
+  25 | Emp_25  |  30 | HR         |  42500
+  26 | Emp_26  |  31 | Finance    |  43000
+  27 | Emp_27  |  32 | IT         |  43500
+  28 | Emp_28  |  33 | HR         |  44000
+  29 | Emp_29  |  34 | Finance    |  44500
+  30 | Emp_30  |  20 | IT         |  45000
+  31 | Emp_31  |  21 | HR         |  45500
+  32 | Emp_32  |  22 | Finance    |  46000
+  33 | Emp_33  |  23 | IT         |  46500
+  34 | Emp_34  |  24 | HR         |  47000
+  35 | Emp_35  |  25 | Finance    |  47500
+  36 | Emp_36  |  26 | IT         |  48000
+  37 | Emp_37  |  27 | HR         |  48500
+  38 | Emp_38  |  28 | Finance    |  49000
+  39 | Emp_39  |  29 | IT         |  49500
+  40 | Emp_40  |  30 | HR         |  50000
+  41 | Emp_41  |  31 | Finance    |  50500
+  42 | Emp_42  |  32 | IT         |  51000
+  43 | Emp_43  |  33 | HR         |  51500
+  44 | Emp_44  |  34 | Finance    |  52000
+  45 | Emp_45  |  20 | IT         |  52500
+  46 | Emp_46  |  21 | HR         |  53000
+  47 | Emp_47  |  22 | Finance    |  53500
+  48 | Emp_48  |  23 | IT         |  54000
+  49 | Emp_49  |  24 | HR         |  54500
+  50 | Emp_50  |  25 | Finance    |  55000
+  51 | Emp_51  |  26 | IT         |  55500
+  52 | Emp_52  |  27 | HR         |  56000
+  53 | Emp_53  |  28 | Finance    |  56500
+  54 | Emp_54  |  29 | IT         |  57000
+  55 | Emp_55  |  30 | HR         |  57500
+  56 | Emp_56  |  31 | Finance    |  58000
+  57 | Emp_57  |  32 | IT         |  58500
+  58 | Emp_58  |  33 | HR         |  59000
+  59 | Emp_59  |  34 | Finance    |  59500
+  60 | Emp_60  |  20 | IT         |  60000
+  61 | Emp_61  |  21 | HR         |  60500
+  62 | Emp_62  |  22 | Finance    |  61000
+  63 | Emp_63  |  23 | IT         |  61500
+  64 | Emp_64  |  24 | HR         |  62000
+  65 | Emp_65  |  25 | Finance    |  62500
+  66 | Emp_66  |  26 | IT         |  63000
+testing=# select * from employees where age < 30;
+ id |  name  | age | department | salary 
+----+--------+-----+------------+--------
+  1 | Emp_1  |  21 | HR         |  30500
+  2 | Emp_2  |  22 | Finance    |  31000
+  3 | Emp_3  |  23 | IT         |  31500
+  4 | Emp_4  |  24 | HR         |  32000
+  5 | Emp_5  |  25 | Finance    |  32500
+  6 | Emp_6  |  26 | IT         |  33000
+  7 | Emp_7  |  27 | HR         |  33500
+  8 | Emp_8  |  28 | Finance    |  34000
+  9 | Emp_9  |  29 | IT         |  34500
+ 15 | Emp_15 |  20 | IT         |  37500
+ 16 | Emp_16 |  21 | HR         |  38000
+ 17 | Emp_17 |  22 | Finance    |  38500
+ 18 | Emp_18 |  23 | IT         |  39000
+ 19 | Emp_19 |  24 | HR         |  39500
+ 20 | Emp_20 |  25 | Finance    |  40000
+ 21 | Emp_21 |  26 | IT         |  40500
+ 22 | Emp_22 |  27 | HR         |  41000
+ 23 | Emp_23 |  28 | Finance    |  41500
+ 24 | Emp_24 |  29 | IT         |  42000
+ 30 | Emp_30 |  20 | IT         |  45000
+ 31 | Emp_31 |  21 | HR         |  45500
+ 32 | Emp_32 |  22 | Finance    |  46000
+ 33 | Emp_33 |  23 | IT         |  46500
+ 34 | Emp_34 |  24 | HR         |  47000
+ 35 | Emp_35 |  25 | Finance    |  47500
+ 36 | Emp_36 |  26 | IT         |  48000
+ 37 | Emp_37 |  27 | HR         |  48500
+ 38 | Emp_38 |  28 | Finance    |  49000
+ 39 | Emp_39 |  29 | IT         |  49500
+ 45 | Emp_45 |  20 | IT         |  52500
+ 46 | Emp_46 |  21 | HR         |  53000
+ 47 | Emp_47 |  22 | Finance    |  53500
+ 48 | Emp_48 |  23 | IT         |  54000
+ 49 | Emp_49 |  24 | HR         |  54500
+ 50 | Emp_50 |  25 | Finance    |  55000
+ 51 | Emp_51 |  26 | IT         |  55500
+ 52 | Emp_52 |  27 | HR         |  56000
+ 53 | Emp_53 |  28 | Finance    |  56500
+ 54 | Emp_54 |  29 | IT         |  57000
+ 60 | Emp_60 |  20 | IT         |  60000
+ 61 | Emp_61 |  21 | HR         |  60500
+ 62 | Emp_62 |  22 | Finance    |  61000
+ 63 | Emp_63 |  23 | IT         |  61500
+ 64 | Emp_64 |  24 | HR         |  62000
+ 65 | Emp_65 |  25 | Finance    |  62500
+ 66 | Emp_66 |  26 | IT         |  63000
+testing=# 
+testing=# select * from employees where order by salary DESC;
+ERROR:  syntax error at or near "order"
+LINE 1: select * from employees where order by salary DESC;
+                                      ^
+testing=# select * from employees order by salary DESC;
+ id  |  name   | age | department | salary 
+-----+---------+-----+------------+--------
+ 100 | Emp_100 |  30 | HR         |  80000
+  99 | Emp_99  |  29 | IT         |  79500
+  98 | Emp_98  |  28 | Finance    |  79000
+  97 | Emp_97  |  27 | HR         |  78500
+  96 | Emp_96  |  26 | IT         |  78000
+  95 | Emp_95  |  25 | Finance    |  77500
+  94 | Emp_94  |  24 | HR         |  77000
+  93 | Emp_93  |  23 | IT         |  76500
+  92 | Emp_92  |  22 | Finance    |  76000
+  91 | Emp_91  |  21 | HR         |  75500
+  90 | Emp_90  |  20 | IT         |  75000
+  89 | Emp_89  |  34 | Finance    |  74500
+  88 | Emp_88  |  33 | HR         |  74000
+  87 | Emp_87  |  32 | IT         |  73500
+  86 | Emp_86  |  31 | Finance    |  73000
+  85 | Emp_85  |  30 | HR         |  72500
+  84 | Emp_84  |  29 | IT         |  72000
+  83 | Emp_83  |  28 | Finance    |  71500
+  82 | Emp_82  |  27 | HR         |  71000
+  81 | Emp_81  |  26 | IT         |  70500
+  80 | Emp_80  |  25 | Finance    |  70000
+  79 | Emp_79  |  24 | HR         |  69500
+  78 | Emp_78  |  23 | IT         |  69000
+  77 | Emp_77  |  22 | Finance    |  68500
+  76 | Emp_76  |  21 | HR         |  68000
+  75 | Emp_75  |  20 | IT         |  67500
+  74 | Emp_74  |  34 | Finance    |  67000
+  73 | Emp_73  |  33 | HR         |  66500
+  72 | Emp_72  |  32 | IT         |  66000
+  71 | Emp_71  |  31 | Finance    |  65500
+  70 | Emp_70  |  30 | HR         |  65000
+  69 | Emp_69  |  29 | IT         |  64500
+  68 | Emp_68  |  28 | Finance    |  64000
+  67 | Emp_67  |  27 | HR         |  63500
+  66 | Emp_66  |  26 | IT         |  63000
+  65 | Emp_65  |  25 | Finance    |  62500
+  64 | Emp_64  |  24 | HR         |  62000
+  63 | Emp_63  |  23 | IT         |  61500
+  62 | Emp_62  |  22 | Finance    |  61000
+  61 | Emp_61  |  21 | HR         |  60500
+  60 | Emp_60  |  20 | IT         |  60000
+  59 | Emp_59  |  34 | Finance    |  59500
+  58 | Emp_58  |  33 | HR         |  59000
+  57 | Emp_57  |  32 | IT         |  58500
+  56 | Emp_56  |  31 | Finance    |  58000
+  55 | Emp_55  |  30 | HR         |  57500
+testing=# select * from employees order by salary DESC limit 2;
+ id  |  name   | age | department | salary 
+-----+---------+-----+------------+--------
+ 100 | Emp_100 |  30 | HR         |  80000
+  99 | Emp_99  |  29 | IT         |  79500
+(2 rows)
+
+testing=# select name from employees where department='HR';
+  name   
+---------
+ Emp_1
+ Emp_4
+ Emp_7
+ Emp_10
+ Emp_13
+ Emp_16
+ Emp_19
+ Emp_22
+ Emp_25
+ Emp_28
+ Emp_31
+ Emp_34
+ Emp_37
+ Emp_40
+ Emp_43
+ Emp_46
+ Emp_49
+ Emp_52
+ Emp_55
+ Emp_58
+ Emp_61
+ Emp_64
+ Emp_67
+ Emp_70
+ Emp_73
+ Emp_76
+ Emp_79
+ Emp_82
+ Emp_85
+ Emp_88
+ Emp_91
+ Emp_94
+ Emp_97
+ Emp_100
+(34 rows)
+
+testing=# select * from employees where age > 25 and department='IT';
+ id |  name  | age | department | salary 
+----+--------+-----+------------+--------
+  6 | Emp_6  |  26 | IT         |  33000
+  9 | Emp_9  |  29 | IT         |  34500
+ 12 | Emp_12 |  32 | IT         |  36000
+ 21 | Emp_21 |  26 | IT         |  40500
+ 24 | Emp_24 |  29 | IT         |  42000
+ 27 | Emp_27 |  32 | IT         |  43500
+ 36 | Emp_36 |  26 | IT         |  48000
+ 39 | Emp_39 |  29 | IT         |  49500
+ 42 | Emp_42 |  32 | IT         |  51000
+ 51 | Emp_51 |  26 | IT         |  55500
+ 54 | Emp_54 |  29 | IT         |  57000
+ 57 | Emp_57 |  32 | IT         |  58500
+ 66 | Emp_66 |  26 | IT         |  63000
+ 69 | Emp_69 |  29 | IT         |  64500
+ 72 | Emp_72 |  32 | IT         |  66000
+ 81 | Emp_81 |  26 | IT         |  70500
+ 84 | Emp_84 |  29 | IT         |  72000
+ 87 | Emp_87 |  32 | IT         |  73500
+ 96 | Emp_96 |  26 | IT         |  78000
+ 99 | Emp_99 |  29 | IT         |  79500
+(20 rows)
+
+testing=# select * from employees where salary between 30000 and 50000;
+ id |  name  | age | department | salary 
+----+--------+-----+------------+--------
+  1 | Emp_1  |  21 | HR         |  30500
+  2 | Emp_2  |  22 | Finance    |  31000
+  3 | Emp_3  |  23 | IT         |  31500
+  4 | Emp_4  |  24 | HR         |  32000
+  5 | Emp_5  |  25 | Finance    |  32500
+  6 | Emp_6  |  26 | IT         |  33000
+  7 | Emp_7  |  27 | HR         |  33500
+  8 | Emp_8  |  28 | Finance    |  34000
+  9 | Emp_9  |  29 | IT         |  34500
+ 10 | Emp_10 |  30 | HR         |  35000
+ 11 | Emp_11 |  31 | Finance    |  35500
+ 12 | Emp_12 |  32 | IT         |  36000
+ 13 | Emp_13 |  33 | HR         |  36500
+ 14 | Emp_14 |  34 | Finance    |  37000
+ 15 | Emp_15 |  20 | IT         |  37500
+ 16 | Emp_16 |  21 | HR         |  38000
+ 17 | Emp_17 |  22 | Finance    |  38500
+ 18 | Emp_18 |  23 | IT         |  39000
+ 19 | Emp_19 |  24 | HR         |  39500
+ 20 | Emp_20 |  25 | Finance    |  40000
+ 21 | Emp_21 |  26 | IT         |  40500
+ 22 | Emp_22 |  27 | HR         |  41000
+ 23 | Emp_23 |  28 | Finance    |  41500
+ 24 | Emp_24 |  29 | IT         |  42000
+ 25 | Emp_25 |  30 | HR         |  42500
+ 26 | Emp_26 |  31 | Finance    |  43000
+ 27 | Emp_27 |  32 | IT         |  43500
+ 28 | Emp_28 |  33 | HR         |  44000
+ 29 | Emp_29 |  34 | Finance    |  44500
+ 30 | Emp_30 |  20 | IT         |  45000
+ 31 | Emp_31 |  21 | HR         |  45500
+ 32 | Emp_32 |  22 | Finance    |  46000
+ 33 | Emp_33 |  23 | IT         |  46500
+ 34 | Emp_34 |  24 | HR         |  47000
+ 35 | Emp_35 |  25 | Finance    |  47500
+ 36 | Emp_36 |  26 | IT         |  48000
+ 37 | Emp_37 |  27 | HR         |  48500
+ 38 | Emp_38 |  28 | Finance    |  49000
+ 39 | Emp_39 |  29 | IT         |  49500
+ 40 | Emp_40 |  30 | HR         |  50000
+(40 rows)
+
+testing=# select COUNT(id) from employees;
+ count 
+-------
+   100
+(1 row)
+
+testing=# select AVG(salary) from employees;
+        avg         
+--------------------
+ 55250.000000000000
+(1 row)
+
+testing=# select MAX(salary) from employees;
+  max  
+-------
+ 80000
+(1 row)
+
+testing=# select MIN(salary) from employees;
+  min  
+-------
+ 30500
+(1 row)
+
+testing=# select SUM(salary) from employees where department = 'IT';
+   sum   
+---------
+ 1831500
+(1 row)
+
+testing=# select MAX(salary) from employees where salary < (select MAX(salary) from employees;);
+ERROR:  syntax error at or near ";"
+LINE 1: ...ployees where salary < (select MAX(salary) from employees;);
+                                                                    ^
+testing=# select MAX(salary) from employees where salary < (select MAX(salary) from employees);
+  max  
+-------
+ 79500
+(1 row)
+
+testing=# select * from employees order by age ASC limit 3;
+ id |  name  | age | department | salary 
+----+--------+-----+------------+--------
+ 30 | Emp_30 |  20 | IT         |  45000
+ 15 | Emp_15 |  20 | IT         |  37500
+ 45 | Emp_45 |  20 | IT         |  52500
+(3 rows)
